@@ -6,9 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace QuoteGeneratorAPI.Models {
 
     public class QuoteManager {
-         private const string CONNECTION_STRING = "Server=localhost;port=3306;Database=dotnetcoreSamples;Uid=user;Pwd=test;SslMode=none;";
-
-        // database connectivity variables
+         // database connectivity variables
         private MySqlConnection dbConnection; 
         private MySqlCommand dbCommand;
         private MySqlDataReader dbReader;
@@ -20,10 +18,8 @@ namespace QuoteGeneratorAPI.Models {
         public QuoteManager() {
             // initialization
             _count = 0;
-            _quotes = new List<Quote>();
-            _quotesList = new List<SelectListItem>();
-            selectedImage = "";
-            dbConnection = new MySqlConnection(CONNECTION_STRING);
+            _quotes = new List<Quote>();            
+            dbConnection = new MySqlConnection(Connection.CONNECTION_STRING);
             dbCommand = new MySqlCommand("", dbConnection);
 
         }  
@@ -40,18 +36,7 @@ namespace QuoteGeneratorAPI.Models {
             }
         }
 
-        public int id {get;set;} = 0;
-
-        public string selectedImage = "";
-
-        private List<SelectListItem> _quotesList;
-
-        public List<SelectListItem> quotesList {
-            get {
-                return _quotesList;
-            }
-        }
-
+        
 
 
         
@@ -60,7 +45,9 @@ namespace QuoteGeneratorAPI.Models {
         //Get Reviiews
         public void getQuotes(int limit) {
             try {
+                // open connection
                 dbConnection.Open();
+
                 dbCommand.CommandText = "SELECT * FROM tbl_quotes LIMIT "+limit;
                 dbReader = dbCommand.ExecuteReader();
 
@@ -118,65 +105,65 @@ namespace QuoteGeneratorAPI.Models {
             
         }
 
-         public void getQuotesList() {
-            try {
-                dbConnection.Open();
-                Console.WriteLine("Here1");
-                dbCommand.CommandText = "SELECT * FROM tblQuotes";
-                Console.WriteLine("Here2>>>"+ dbCommand.CommandText);
-                dbReader = dbCommand.ExecuteReader();
-                Console.WriteLine("Here3>>>>"+ dbReader);
+        //  public void getQuotesList() {
+        //     try {
+        //         dbConnection.Open();
+        //         Console.WriteLine("Here1");
+        //         dbCommand.CommandText = "SELECT * FROM tblQuotes";
+        //         Console.WriteLine("Here2>>>"+ dbCommand.CommandText);
+        //         dbReader = dbCommand.ExecuteReader();
+        //         Console.WriteLine("Here3>>>>"+ dbReader);
 
-                while(dbReader.Read()){
-                    Console.WriteLine("Here4>>>>"+dbReader.Read());
-                    SelectListItem item = new SelectListItem();
-                    item.Text = Convert.ToString(dbReader["quote"]);
-                    item.Value = Convert.ToString(dbReader["id"]);
-                    _quotesList.Add(item);
-                }
-                dbReader.Close();
-            } catch (Exception e) {
-                Console.WriteLine(">>> error occured");
-                Console.WriteLine(">>> " + e.Message);
-            }finally {
-                dbConnection.Close();
-            }  
-        }
+        //         while(dbReader.Read()){
+        //             Console.WriteLine("Here4>>>>"+dbReader.Read());
+        //             SelectListItem item = new SelectListItem();
+        //             item.Text = Convert.ToString(dbReader["quote"]);
+        //             item.Value = Convert.ToString(dbReader["id"]);
+        //             _quotesList.Add(item);
+        //         }
+        //         dbReader.Close();
+        //     } catch (Exception e) {
+        //         Console.WriteLine(">>> error occured");
+        //         Console.WriteLine(">>> " + e.Message);
+        //     }finally {
+        //         dbConnection.Close();
+        //     }  
+        // }
 
-        public string getQuoteById(int id) {
-            try {
-                dbConnection.Open();
-                dbCommand.CommandText = "SELECT * FROM tblQuotes where id="+id;
-                dbReader = dbCommand.ExecuteReader();
-                while(dbReader.Read()){                    
-                     selectedImage = Convert.ToString(dbReader["image"]);
-                }
-                dbReader.Close();
-                return (selectedImage != null)? selectedImage : "";
-            } catch (Exception e) {
-                Console.WriteLine(">>> error occured");
-                Console.WriteLine(">>> " + e.Message);
-                return "";
-            }finally {
-                dbConnection.Close();
-            }  
-        }
+        // public string getQuoteImageById(int id) {
+        //     try {
+        //         dbConnection.Open();
+        //         dbCommand.CommandText = "SELECT * FROM tblQuotes where id="+id;
+        //         dbReader = dbCommand.ExecuteReader();
+        //         while(dbReader.Read()){                    
+        //              selectedImage = Convert.ToString(dbReader["image"]);
+        //         }
+        //         dbReader.Close();
+        //         return (selectedImage != null)? selectedImage : "";
+        //     } catch (Exception e) {
+        //         Console.WriteLine(">>> error occured");
+        //         Console.WriteLine(">>> " + e.Message);
+        //         return "";
+        //     }finally {
+        //         dbConnection.Close();
+        //     }  
+        // }
 
-        public string deleteQuote(int id){
-           try {
-                dbConnection.Open();                           
-                dbCommand.Parameters.Clear();
-                dbCommand.CommandText = "DELETE FROM tblQuotes WHERE id= ?id";
-                dbCommand.Parameters.AddWithValue("?id", id);
-                dbCommand.ExecuteNonQuery();
-                return "Data Deleted Successfully";             
-            } catch (Exception e) {
-                Console.WriteLine(">>> An error has occured with delete quote");
-                Console.WriteLine(">>> " + e.Message);
-                 return "An error has occured with delete quote";  
-            } finally {
-                dbConnection.Close();
-            }
-        }
+        // public string deleteQuote(int id){
+        //    try {
+        //         dbConnection.Open();                           
+        //         dbCommand.Parameters.Clear();
+        //         dbCommand.CommandText = "DELETE FROM tblQuotes WHERE id= ?id";
+        //         dbCommand.Parameters.AddWithValue("?id", id);
+        //         dbCommand.ExecuteNonQuery();
+        //         return "Data Deleted Successfully";             
+        //     } catch (Exception e) {
+        //         Console.WriteLine(">>> An error has occured with delete quote");
+        //         Console.WriteLine(">>> " + e.Message);
+        //          return "An error has occured with delete quote";  
+        //     } finally {
+        //         dbConnection.Close();
+        //     }
+        // }
     }
 }

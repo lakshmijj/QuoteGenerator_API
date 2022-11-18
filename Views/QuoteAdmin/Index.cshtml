@@ -1,5 +1,5 @@
 ﻿
-@model QuoteManager;
+@model Quote;
 
 <script type="text/javascript">
     $(document).ready(function () {       
@@ -31,16 +31,19 @@
             <div class="mb-3 col-12">
                 <label for="author" class="form-label">Author</label>
                 <input type="text" maxLength="100" name="author" class="form-control" id="author" placeholder="Author">
+                <span asp-validation-for="@Model.author" class="text-danger"></span>
             </div>
             <div class="mb-3 col-12">
                 <label for="quote" class="form-label">Quote</label>
                 <textarea class="form-control" maxLength="250" 
                 name="quote" id="quote" rows="3">
                 </textarea>
+                <span asp-validation-for="@Model.quote" class="text-danger"></span>
             </div>
             <div class="mb-3 col-12">
                 <label for="permalink" class="form-label">Link</label>
                 <input type="text" maxLength="100" name="permalink" class="form-control" id="permalink" placeholder="Link">
+                <span asp-validation-for="@Model.permalink" class="text-danger"></span>
             </div>
             <div class="mb-3 col-12">
                 <label class="btn btn-warning">
@@ -48,10 +51,11 @@
                 </label>
                 <div id="uploadedFile"></div>
             </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
             <div class="mb-3 col-12">
                  <button type="submit"
                                 class="btn btn-warning mb-3 btn-submit">Add Quote</button>
-                  <span class="text-warning">@ViewData["feedback"]</span>              
+                  <span class="text-warning">@TempData["addResponse"]</span>              
             </div>
            
         </form>
@@ -61,7 +65,7 @@
             </div>
         </div>
         <div class="row mt-4">
-            <form class="col-md col-sm" asp-controller="QuoteAdmin" asp-action="GetQuoteById">
+             <form class="col-md col-sm" asp-controller="QuoteAdmin" asp-action="DeleteQuote">
             <div class="row ml-1">             
                 <select 
                     asp-items="@Model.quotesList"
@@ -70,14 +74,10 @@
                     class="col-12 form-control"
                     ></select>            
             </div>
-            </form>
-             <form class="col-md col-sm" asp-controller="QuoteAdmin" asp-action="DeleteQuote">
             <div class="mb-3 mt-2 row ml-1">
-                 <input type="hidden" asp-for="@Model.id" />
-                 <input type="hidden" asp-for="@Model.selectedImage" />
                  <button type="submit"
-                                class="btn btn-warning mb-3 btn-submit" onclick="onDelete()">Delete Quote</button>
-                  <span class="text-warning" id="deleteFeedback"></span>              
+                                class="btn btn-warning mb-3 btn-submit">Delete Quote</button>
+                  <span class="text-warning" id="deleteFeedback">@TempData["deleteFeedBack"]</span>              
             </div>
             </form>
         </div>

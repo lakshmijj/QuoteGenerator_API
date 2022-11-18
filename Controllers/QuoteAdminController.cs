@@ -16,53 +16,43 @@ namespace QuoteGeneratorAPI.Controllers {
             environment = env;
         }
         public IActionResult Index() {
-            QuoteManager quoteManager = new QuoteManager();
-            quoteManager.getQuotesList();
-            Console.WriteLine("Quotes List>>>>>>>>>>>>>>");
-            Console.WriteLine(quoteManager.quotesList);
-            return View(quoteManager);
+            Quote quote = new Quote();
+            quote.getQuotesList();    
+            return View(quote);
         }
         
 
         [HttpPost]
-        public IActionResult AddQuote(QuoteManager quoteManager, string author, string quote, string permalink, IFormFile selectedFile){
-            Console.WriteLine("----------------------------");
+        public IActionResult AddQuote(Quote quotes, string author, string quote, string permalink, IFormFile selectedFile){
+            if (!ModelState.IsValid) {
+                return View("Index", quotes);
+            };
             string image = Path.GetFileName(selectedFile.FileName);
-            Console.WriteLine("------------selected image: "+quoteManager.selectedImage);
             ImageUploader imageUploader = new ImageUploader(environment, "uploads");
-            Console.WriteLine(">>>>>>>>>>>>>>>>>>selected file:  "+selectedFile);
             int result = imageUploader.upload(selectedFile);
-            Console.WriteLine(">>>>>>>>>>>>>>>>>>result of upload: "+result);
             string feedback = "";
             if(result == 5){                
-                feedback = quoteManager.addQuote(author, quote, permalink, image);
+                feedback = quotes.addQuote(author, quote, permalink, image);
             }
-            // Console.WriteLine("Upload Result"+ result);
-            // imageManager.buildImagesList(environment, "uploads");
-            ViewData["feedback"] = feedback;
-            quoteManager = new QuoteManager();
+            TempData["addResponse"] = feedback;
+            TempData["deleteFeedBack"] = "";
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public IActionResult DeleteQuote(QuoteManager quoteManager, int id){
+        public IActionResult DeleteQuote(Quote quote, int id){
             //fetch the image name stored in DB
-            quoteManager.selectedImage = quoteManager.getQuoteById(id);
+            quote.selectedImage = quote.getQuoteImageById(id);
             //if image, delete it from server location
-            if(quoteManager.selectedImage != ""){
+            if(quote.selectedImage != ""){
                 ImageUploader imageUploader = new ImageUploader(environment, "uploads");
-                imageUploader.delete(quoteManager.selectedImage);
-                string feedback = quoteManager.deleteQuote(Convert.ToInt32(id));
-                //ViewData["deleteFeedBack"] = "Quote with image 'imageName' has been deleted";   
-                 quoteManager.getQuotesList();             
+                //Deleted the image
+                imageUploader.delete(quote.selectedImage);
+                //Delete Quote from DB
+                string feedback = quote.deleteQuote(Convert.ToInt32(id));
+                TempData["addResponse"] = "";
+                TempData["deleteFeedBack"] = "Quote with image "+quote.selectedImage+" has been deleted";
             }
-            return RedirectToAction("Index");            
-        }
-
-        [HttpPost]
-        public IActionResult GetQuoteById(QuoteManager quoteManager, int id){
-            //fetch the image name stored in DB
-            quoteManager.selectedImage = quoteManager.getQuoteById(id);
             return RedirectToAction("Index");            
         }
 
