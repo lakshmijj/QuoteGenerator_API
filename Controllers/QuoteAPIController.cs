@@ -16,12 +16,12 @@ namespace QuoteGeneratorAPI.Controllers {
         [HttpGet]
         // the URL routing - Web APIs must have one
         [Route("quotes/{limit}")]
-        public ActionResult<List<string>> Get(string limit) {
+        public ActionResult<string> Get(string limit) {
             // for this action method to return JSON, you only need to have it return a List of data
             // this test List is an example only!
             QuoteManager quoteManager = new QuoteManager();
-            quoteManager.getQuotes(Convert.ToInt32(limit));
-            List<string> test = new List<string>() { "hello","world","with","json" };
+            string test = quoteManager.getQuotes(Convert.ToInt32(limit));
+            //List<string> test = new List<string>() { "hello","world","with","json" };
             
             // test this out by hitting https://localhost:5001/data
             return test;

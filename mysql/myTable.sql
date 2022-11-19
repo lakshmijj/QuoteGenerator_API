@@ -20,7 +20,8 @@ CREATE TABLE `tblQuotes` (
   `permalink` varchar(100) NULL,
   `image` varchar(110) NOT NULL
 );
-
+ALTER TABLE `tblQuotes`
+ADD `filepath` varchar(110) COLLATE 'utf8mb4_0900_ai_ci' NOT NULL;
 --
 -- Dumping data for table `tblGrades`
 --

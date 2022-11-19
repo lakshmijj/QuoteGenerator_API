@@ -16,31 +16,45 @@ namespace QuoteGeneratorAPI.Controllers {
             environment = env;
         }
         public IActionResult Index() {
-            Quote quote = new Quote();
-            quote.getQuotesList();    
+            Quotes quote = new Quotes();
+            quote.getQuotesList();       
             return View(quote);
         }
         
 
         [HttpPost]
-        public IActionResult AddQuote(Quote quotes, string author, string quote, string permalink, IFormFile selectedFile){
+        public IActionResult AddQuote(Quotes quotes){  
+            TempData["author"] = quotes.author;
+            TempData["quote"] = quotes.quote;
+            TempData["permalink"] = quotes.permalink;
             if (!ModelState.IsValid) {
-                return View("Index", quotes);
+                return View("Index", quotes);                
             };
-            string image = Path.GetFileName(selectedFile.FileName);
+            quotes.image = Path.GetFileName(quotes.selectedFile.FileName);            
+            quotes.filepath = quotes.image;
             ImageUploader imageUploader = new ImageUploader(environment, "uploads");
-            int result = imageUploader.upload(selectedFile);
+            if(imageUploader.fileCheck(quotes.image)){
+                quotes.filepath = quotes.filepath+"_"+new Guid();
+            }            
+            string result = imageUploader.upload(quotes.selectedFile, quotes.filepath);
             string feedback = "";
-            if(result == 5){                
-                feedback = quotes.addQuote(author, quote, permalink, image);
+            if(result == "File saved successfully!" ){                
+                feedback = quotes.addQuote();
+            }else{
+                feedback = result;
+                TempData["addResponse"] = feedback;
+                return View("Index", quotes); 
             }
             TempData["addResponse"] = feedback;
             TempData["deleteFeedBack"] = "";
+            TempData["author"] = "";
+            TempData["quote"] = "";
+            TempData["permalink"] = "";
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public IActionResult DeleteQuote(Quote quote, int id){
+        public IActionResult DeleteQuote(Quotes quote, int id){
             //fetch the image name stored in DB
             quote.selectedImage = quote.getQuoteImageById(id);
             //if image, delete it from server location

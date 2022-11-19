@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace QuoteGeneratorAPI.Models {
 
-    public class Quote {
+    public class Quotes {
         
         private MySqlConnection dbConnection;
         private MySqlCommand dbCommand;
@@ -27,12 +27,18 @@ namespace QuoteGeneratorAPI.Models {
         [Display(Name="Quote")]        
         public string quote {get; set;}        
         
-        [RegularExpression(@"[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)", ErrorMessage="Please enter a valid URL")]
-        [Display(Name="Link to the quotes")]
+        //[RegularExpression(@"[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)", ErrorMessage="Please enter a valid URL")]
+        [Url(ErrorMessage="Please enter a valid Url")]
         public string permalink {get; set;}
         
-        public string image {get;set;}
+        [Required]
+        [Display(Name="Image")]
+        public IFormFile selectedFile {get; set;}
+
+                
         public string selectedImage = "";
+        public string image = "";
+        public string filepath = "";
 
         private List<SelectListItem> _quotesList;
 
@@ -44,31 +50,38 @@ namespace QuoteGeneratorAPI.Models {
 
 
         //constructor
-        public Quote(){
+        public Quotes(){
             dbConnection = new MySqlConnection(Connection.CONNECTION_STRING);
             dbCommand = new MySqlCommand("", dbConnection);
             _quotesList = new List<SelectListItem>();
             selectedImage = "";
+            author = "";
+            quote = "";
+            permalink = "";
+            image = "";
+            filepath = "";
         }
 
         //-------------------------public methods
 
         // Add Quotes
-        public string addQuote(string author, string quote, string permalink, string image){
+        public string addQuote(){
                 try {
                 // open connection                
                 dbConnection.Open();
 
                 dbCommand.Parameters.Clear();
-                dbCommand.CommandText = "INSERT INTO tblQuotes (author,quote,permalink,image) VALUES (?author,?quote,?permalink,?image)";
+                dbCommand.CommandText = "INSERT INTO tblQuotes (author,quote,permalink,image, filepath) VALUES (?author,?quote,?permalink,?image, ?filepath)";
 
                 dbCommand.Parameters.AddWithValue("?author", author);
 
-                dbCommand.Parameters.AddWithValue("?quote", quote);
+                dbCommand.Parameters.AddWithValue("?quote", quote.Trim());
 
                 dbCommand.Parameters.AddWithValue("?permalink", permalink);
 
                 dbCommand.Parameters.AddWithValue("?image", image);
+
+                dbCommand.Parameters.AddWithValue("?filepath", filepath);
 
                  dbCommand.ExecuteNonQuery();
                  return "Data Saved Successfully";  
@@ -110,12 +123,12 @@ namespace QuoteGeneratorAPI.Models {
                 Console.WriteLine("Here3>>>>"+ dbReader);
 
                 while(dbReader.Read()){
-                    Console.WriteLine("Here4>>>>"+dbReader.Read());
                     SelectListItem item = new SelectListItem();
                     item.Text = Convert.ToString(dbReader["quote"]);
                     item.Value = Convert.ToString(dbReader["id"]);
                     _quotesList.Add(item);
                 }
+                Console.WriteLine("Count >>>"+_quotesList.Count());
                 dbReader.Close();
             } catch (Exception e) {
                 Console.WriteLine(">>> error occured");

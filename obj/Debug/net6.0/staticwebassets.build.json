@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "hg6PrBBbIzET7giLcA3We4VXgy0e7+nj9o/SlNrO9GY=",
+  "Hash": "DfA/90vAf6ZmrJkaxytvBDUMXj+8U/hx3GT8vow2rgE=",
   "Source": "QuoteGeneratorAPI",
   "BasePath": "_content/QuoteGeneratorAPI",
   "Mode": "Default",
@@ -646,12 +646,12 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\LICENSE.txt"
     },
     {
-      "Identity": "C:\\Users\\ljaya\\OneDrive\\Desktop\\nscc\\INET2005WebApp\\QuoteGeneratorAPI\\wwwroot\\uploads\\cartoonSean.gif",
+      "Identity": "C:\\Users\\ljaya\\OneDrive\\Desktop\\nscc\\INET2005WebApp\\QuoteGeneratorAPI\\wwwroot\\uploads\\image8.jpg",
       "SourceId": "QuoteGeneratorAPI",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\ljaya\\OneDrive\\Desktop\\nscc\\INET2005WebApp\\QuoteGeneratorAPI\\wwwroot\\",
       "BasePath": "_content/QuoteGeneratorAPI",
-      "RelativePath": "uploads/cartoonSean.gif",
+      "RelativePath": "uploads/image8.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -660,15 +660,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\cartoonSean.gif"
+      "OriginalItemSpec": "wwwroot\\uploads\\image8.jpg"
     },
     {
-      "Identity": "C:\\Users\\ljaya\\OneDrive\\Desktop\\nscc\\INET2005WebApp\\QuoteGeneratorAPI\\wwwroot\\uploads\\iconBMASS.png",
+      "Identity": "C:\\Users\\ljaya\\OneDrive\\Desktop\\nscc\\INET2005WebApp\\QuoteGeneratorAPI\\wwwroot\\uploads\\image8.jpg_00000000-0000-0000-0000-000000000000",
       "SourceId": "QuoteGeneratorAPI",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\ljaya\\OneDrive\\Desktop\\nscc\\INET2005WebApp\\QuoteGeneratorAPI\\wwwroot\\",
       "BasePath": "_content/QuoteGeneratorAPI",
-      "RelativePath": "uploads/iconBMASS.png",
+      "RelativePath": "uploads/image8.jpg_00000000-0000-0000-0000-000000000000",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -677,15 +677,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\iconBMASS.png"
+      "OriginalItemSpec": "wwwroot\\uploads\\image8.jpg_00000000-0000-0000-0000-000000000000"
     },
     {
-      "Identity": "C:\\Users\\ljaya\\OneDrive\\Desktop\\nscc\\INET2005WebApp\\QuoteGeneratorAPI\\wwwroot\\uploads\\iconMunch.png",
+      "Identity": "C:\\Users\\ljaya\\OneDrive\\Desktop\\nscc\\INET2005WebApp\\QuoteGeneratorAPI\\wwwroot\\uploads\\IMG_0258.jpg_00000000-0000-0000-0000-000000000000",
       "SourceId": "QuoteGeneratorAPI",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\ljaya\\OneDrive\\Desktop\\nscc\\INET2005WebApp\\QuoteGeneratorAPI\\wwwroot\\",
       "BasePath": "_content/QuoteGeneratorAPI",
-      "RelativePath": "uploads/iconMunch.png",
+      "RelativePath": "uploads/IMG_0258.jpg_00000000-0000-0000-0000-000000000000",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -694,24 +694,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\iconMunch.png"
-    },
-    {
-      "Identity": "C:\\Users\\ljaya\\OneDrive\\Desktop\\nscc\\INET2005WebApp\\QuoteGeneratorAPI\\wwwroot\\uploads\\legoMe.png",
-      "SourceId": "QuoteGeneratorAPI",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\ljaya\\OneDrive\\Desktop\\nscc\\INET2005WebApp\\QuoteGeneratorAPI\\wwwroot\\",
-      "BasePath": "_content/QuoteGeneratorAPI",
-      "RelativePath": "uploads/legoMe.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\legoMe.png"
+      "OriginalItemSpec": "wwwroot\\uploads\\IMG_0258.jpg_00000000-0000-0000-0000-000000000000"
     }
   ]
 }

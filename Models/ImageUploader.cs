@@ -8,12 +8,12 @@ namespace QuoteGeneratorAPI.Models {
     public class ImageUploader {
 
         // class constants for different errors while uploading
-        public const int ERROR_NO_FILE =  0;//"Please select an image to upload";
-        public const int ERROR_TYPE = 1;//"Plase select only GIF, JPG or PNG files";
-        public const int ERROR_SIZE = 2;//"Please select image less than 4 MB";
-        public const int ERROR_NAME_LENGTH = 3;//"Please enter filename less than 100";
-        public const int ERROR_SAVE =  4;//"Sorry!! Could not save the file";
-        public const int SUCCESS = 5; //"File saved successfully!";
+        public const string ERROR_NO_FILE =  "Please select an image to upload";
+        public const string ERROR_TYPE = "Please select only GIF, JPG or PNG files";
+        public const string ERROR_SIZE = "Please select image less than 4 MB";
+        public const string ERROR_NAME_LENGTH = "Please enter filename less than 100";
+        public const string ERROR_SAVE =  "Sorry!! Could not save the file";
+        public const string SUCCESS = "File saved successfully!";
 
         // this is the file size limit in bytes that IFormFile approach can handle
         // do have the option to stream larger files - but is more complicated
@@ -39,13 +39,14 @@ namespace QuoteGeneratorAPI.Models {
         }
 
         // --------------------------------------------------- public methods
-        public int upload(IFormFile file){
+        public string upload(IFormFile file, string filenameToBeUsed){
             if(file != null){
                 string contentType = file.ContentType;
+                Console.WriteLine(contentType);
                 if((contentType == "image/png") || (contentType == "image/jpeg") || (contentType == "image/gif")){
                    long size = file.Length;
                    if(size > 0 && size < UPLOADLIMIT){
-                        string filename = Path.GetFileName(file.FileName);
+                        string filename = filenameToBeUsed;//Path.GetFileName(file.FileName);
                         if(filename.Length < 100){
                             FileStream stream = new FileStream((fullPath+filename), FileMode.Create);
                             try{
@@ -75,6 +76,10 @@ namespace QuoteGeneratorAPI.Models {
                 string existingFile = Path.Combine(fullPath+filename);
                 System.IO.File.Delete(existingFile);
             }                
+        }
+
+        public bool fileCheck(string filename){
+            return File.Exists(fullPath+filename);
         }
 
     }
