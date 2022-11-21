@@ -29,7 +29,7 @@ namespace QuoteGeneratorAPI.Models {
         
         //[RegularExpression(@"[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)", ErrorMessage="Please enter a valid URL")]
         [Url(ErrorMessage="Please enter a valid Url")]
-        public string permalink {get; set;}
+        public string? permalink {get; set;}
         
         [Required]
         [Display(Name="Image")]
